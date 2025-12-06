@@ -18,17 +18,23 @@ class InMemoryDB:
             self.current_transaction[key] = val
 
     def begin_transaction(self):
-        pass
+        self.inTransaction = True
 
     def commit(self):
-        if self.current_transaction:
-            for key, val in self.current_transaction.items():
-                self.accounts[key] = val
-            self.current_transaction = {}
-        pass
+        if not self.inTransaction:
+            raise Exception("No open transaction.")
+        else:
+            if self.current_transaction:
+                for key, val in self.current_transaction.items():
+                    self.accounts[key] = val
+                self.current_transaction = {}
+            self.inTransaction = False
 
     def rollback(self):
-        pass
+        if not self.inTransaction:
+            raise Exception("No ongoing transaction.")
+        else:
+            self.current_transaction = {}
 
 
 def main():
@@ -36,7 +42,6 @@ def main():
 
     imdb.get("A")
 
-    pass
+    return 0
 
-
-main()
+# main()
