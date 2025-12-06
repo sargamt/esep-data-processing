@@ -35,13 +35,3 @@ class InMemoryDB:
             raise Exception("No ongoing transaction.")
         else:
             self.current_transaction = {}
-
-
-def main():
-    imdb = InMemoryDB
-
-    imdb.get("A")
-
-    return 0
-
-# main()
